@@ -58,7 +58,7 @@ module.exports = function toReadable (number) {
         return (
           ones[(numString[0])] +
           ' hundred ' +
-          toReadable(+(numString[1] + numString[2]))
+          toReadable(+(numString[1] + numString[2])).trim()
         )
     }
   
