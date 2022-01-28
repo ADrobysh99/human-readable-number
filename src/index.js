@@ -57,7 +57,7 @@ module.exports = function toReadable (number) {
       else
         return (
           ones[Number(numString[0])] +
-          ' hundred and ' +
+          ' hundred ' +
           toReadable(+(numString[1] + numString[2]))
         )
     }
@@ -68,7 +68,7 @@ module.exports = function toReadable (number) {
       if (end < 100)
         return (
           ones[Number(numString[0])] +
-          ' thousand and ' +
+          ' thousand ' +
           toReadable(end)
         )
       return (
@@ -77,6 +77,6 @@ module.exports = function toReadable (number) {
     }
     return ''
   }
-  toReadable ();
+ 
 
  
