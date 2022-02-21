@@ -1,82 +1,26 @@
+   
 module.exports = function toReadable (number) {
-    number = Math.floor(number)
-    var ones = [
-      '',
-      'one',
-      'two',
-      'three',
-      'four',
-      'five',
-      'six',
-      'seven',
-      'eight',
-      'nine',
-      'ten',
-      'eleven',
-      'twelve',
-      'thirteen',
-      'fourteen',
-      'fifteen',
-      'sixteen',
-      'seventeen',
-      'eighteen',
-      'nineteen'
-    ]
-    var tens = [
-      '',
-      '',
-      'twenty',
-      'thirty',
-      'forty',
-      'fifty',
-      'sixty',
-      'seventy',
-      'eighty',
-      'ninety'
-    ]
-  
-    var numString = number.toString()
-  
-    if (number < 0) throw new Error('Negative numbers are not supported.')
-  
-    if (number === 0) return 'zero'
-  
-    // 1 - 20
-    if (number < 20) {
-      return ones[number];
-    }
-  
-    if (numString.length === 2) {
-      return tens[(numString[0])] + ' ' + ones[(numString[1])]
-    }
-  
-    //>100
-    if (numString.length == 3) {
-      if (numString[1] === '0' && numString[2] === '0')
-        return ones[(numString[0])] + ' hundred'
-      else
-        return (
-          ones[(numString[0])] +
-          ' hundred ' +
-          toReadable(+(numString[1] + numString[2])).trim()
-        )
-    }
-  
-    if (numString.length === 4) {
-      var end = +(numString[1] + numString[2] + numString[3])
-      if (end === 0) return ones[(numString[0])] + ' thousand'
-      if (end < 100)
-        return (
-          ones[(numString[0])] +
-          ' thousand ' +
-          toReadable(end)
-        )
-      return (
-        ones[(numString[0])] + ' thousand ' + toReadable(end)
-      )
-    }
-    return ''
-  }
- 
+  let ones = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  let teens = ['', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  let tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 
- 
+  if (number < 10) {
+      return ones[number];
+  } else if (number > 10 && number < 20) {
+      return `${teens[Math.floor(number - 10)]}`;
+  } else if (number < 100 && number % 10 === 0) {
+      return tens[number / 10];
+  } else if (number > 20 && number < 100) {
+      return `${tens[Math.floor(number / 10)]} ${ones[number % 10]}`;
+  } else if (number >=100 && number % 100 === 0) {
+    return `${ones[number / 100]} hundred`;
+  } else if (number >= 100 && number % 10 === 0) {
+    return `${ones[Math.trunc(number / 100)]} hundred ${tens[((number % 100) / 10)]}`;
+  } else if (number > 100 && Math.trunc(number % 100) < 10) {
+    return `${ones[Math.trunc(number / 100)]} hundred ${ones[Math.trunc(number%10)]}`;
+  } else if (number > 100 && Math.trunc(number % 100) < 20 && Math.trunc(number % 100) > 10) {
+    return `${ones[Math.trunc(number / 100)]} hundred ${teens[Math.trunc(number%10)]}`;
+  } else if (number > 100 && Math.trunc(number % 100) >= 20 && number % 10 !== 0) {
+    return `${ones[Math.trunc(number / 100)]} hundred ${tens[Math.trunc((number%100)/10)]} ${ones[Math.trunc(number%10)]}`;
+  } 
+}
